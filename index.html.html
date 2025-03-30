@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanyz - Document Management Reimagined</title>
+    <style>
+        :root {
+            --beige: #F5F2E9; /* Beige background */
+            --green: #86B87A; /* Matcha green accent */
+            --dark-green: #5A7F52; /* Darker green for hover */
+            --text-dark: #2A2A2A; /* Dark text */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: var(--beige);
+            color: var(--text-dark);
+            line-height: 0.9;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 95%;
+            margin: 0 auto;
+            padding: 0;
+            position: relative;
+        }
+        
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .header-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+            transition: color 0.2s ease;
+        }
+        
+        .header-link:hover {
+            color: var(--green);
+        }
+        
+        .hero-container {
+            padding: 10px 0 30px;
+            position: relative;
+        }
+        
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        
+        .line {
+            font-size: 15vw;
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -2px;
+            color: var(--text-dark);
+            display: inline-block;
+            margin-left: -5px;
+        }
+        
+        .line-highlight {
+            color: var(--green);
+            font-size: 20vw;
+            margin-top: -30px;
+        }
+        
+        .pitch-container {
+            margin: 10px 0 30px;
+        }
+        
+        .pitch-text {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 20px;
+            max-width: 90%;
+        }
+        
+        .pitch-text strong {
+            color: var(--green);
+            font-weight: 800;
+        }
+        
+        .separator {
+            width: 100%;
+            height: 5px;
+            background-color: var(--green);
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .separator::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark-green);
+            animation: separatorSlide 8s infinite;
+        }
+        
+        @keyframes separatorSlide {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: -100%; }
+        }
+        
+        .big-title {
+            font-size: 20vw;
+            font-weight: 900;
+            margin-bottom: 0;
+            color: var(--text-dark);
+            letter-spacing: -5px;
+            line-height: 0.8;
+            text-transform: uppercase;
+            margin-top: 20px;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            cursor: default;
+        }
+        
+        .big-title:hover {
+            color: var(--green);
+            text-shadow: 3px 3px 0px rgba(90, 127, 82, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 6vw;
+            font-weight: 800;
+            color: var(--green);
+            margin-top: -10px;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+        
+        .features-list {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 20px 0 30px;
+            justify-content: space-between;
+        }
+        
+        .feature-item {
+            font-size: 2rem;
+            line-height: 1.1;
+            margin: 8px 0;
+            color: var(--text-dark);
+            font-weight: 700;
+            width: 48%;
+        }
+        
+        .section-number {
+            font-size: 15vw;
+            font-weight: 900;
+            color: rgba(134, 184, 122, 0.2);
+            line-height: 0.8;
+            position: absolute;
+            right: 0;
+            margin-top: -50px;
+            z-index: -1;
+        }
+        
+        .section-title {
+            font-size: 10vw;
+            font-weight: 900;
+            color: var(--green);
+            margin: 30px 0 20px 0;
+            line-height: 0.9;
+            letter-spacing: -2px;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+        
+        .section-content {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-text {
+            font-size: 2rem;
+            line-height: 1.2;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            font-weight: 600;
+            max-width: 95%;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            margin: 30px 0;
+        }
+        
+        .step {
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 25px;
+        }
+        
+        .step-number {
+            font-size: 18vw;
+            font-weight: 900;
+            color: rgba(134, 184, 122, 0.4);
+            line-height: 0.7;
+            flex-shrink: 0;
+            margin-top: -30px;
+        }
+        
+        .step-content {
+            flex-grow: 1;
+        }
+        
+        .step-title {
+            font-size: 4vw;
+            font-weight: 900;
+            color: var(--green);
+            margin: 0 0 10px 0;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+        
+        .step-description {
+            font-size: 1.8rem;
+            line-height: 1.2;
+            color: var(--text-dark);
+            max-width: 95%;
+            font-weight: 600;
+        }
+        
+        .cta-section {
+            text-align: left;
+            padding: 40px 0 60px;
+        }
+        
+        .demo-btn {
+            display: inline-block;
+            background-color: var(--green);
+            color: var(--beige);
+            font-size: 3rem;
+            font-weight: 900;
+            padding: 20px 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+        
+        .demo-btn:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(134, 184, 122, 0.3);
+        }
+        
+        .demo-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.5s ease;
+            transform: skewX(-15deg);
+            z-index: -1;
+        }
+        
+        .demo-btn:hover::before {
+            transform: translateX(200%) skewX(-15deg);
+        }
+        
+        .philosophy-section {
+            margin: 40px 0;
+        }
+        
+        .philosophy-content {
+            margin: 30px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .philosophy-card {
+            margin-bottom: 20px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        
+        .philosophy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(134, 184, 122, 0.2);
+            background-color: rgba(245, 242, 233, 0.7);
+        }
+        
+        .philosophy-card h3 {
+            font-size: 7vw;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.9;
+        }
+        
+        .philosophy-card p {
+            font-size: 1.8rem;
+            line-height: 1.3;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            font-weight: 600;
+            max-width: 85%;
+        }
+        
+        .japanese-vertical {
+            writing-mode: vertical-rl;
+            font-size: 15vw;
+            color: rgba(134, 184, 122, 0.2);
+            font-weight: 900;
+            position: absolute;
+            right: 40px;
+            top: 0;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .philosophy-card:hover .japanese-vertical {
+            color: rgba(134, 184, 122, 0.4);
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .delta-symbol {
+            font-size: 15vw;
+            color: rgba(134, 184, 122, 0.2);
+            font-weight: 900;
+            position: absolute;
+            right: 60px;
+            top: 0;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .philosophy-card:hover .delta-symbol {
+            color: rgba(134, 184, 122, 0.4);
+            transform: scale(1.1) rotate(-5deg);
+        }
+        
+        footer {
+            padding: 60px 0 40px;
+            margin-top: 60px;
+            border-top: none;
+            position: relative;
+        }
+        
+        footer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--green);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-info p {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .footer-links {
+            margin-top: 30px;
+        }
+        
+        .footer-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            margin-right: 30px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--green);
+        }
+        
+        /* New staggered text class */
+        .staggered-text {
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .staggered-line {
+            font-size: 7vw;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: -10px;
+            text-transform: uppercase;
+        }
+        
+        .staggered-line:nth-child(odd) {
+            color: var(--text-dark);
+        }
+        
+        .staggered-line:nth-child(even) {
+            color: var(--green);
+            margin-left: 10%;
+        }
+        
+        /* Added full-width section */
+        .full-width-text {
+            font-size: 13vw;
+            font-weight: 900;
+            color: var(--green);
+            line-height: 0.9;
+            margin: 40px 0;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+        }
+        
+        .full-width-text.grey {
+            color: #888888;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            
+            .feature-item {
+                width: 100%;
+            }
+            
+            .step-title {
+                font-size: 8vw;
+            }
+            
+            .philosophy-card p {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="mailto:scanyz@outlook.com.au?subject=Software Inquiry" class="header-link">Contact Us</a>
+        </header>
+        
+        <div class="hero-container">
+            <div class="hero-text">
+                <div class="line">Paper</div>
+                <div class="line">Chaos</div>
+                <div class="line">Just Became</div>
+                <div class="line">Your</div>
+                <div class="line line-highlight">Strength</div>
+            </div>
+            
+            <div class="pitch-container">
+                <p class="pitch-text">
+                    The <strong>only</strong> paper solution that gets <strong>stronger</strong> from disorder
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="separator"></div>
+    
+    <div class="container">
+        <h1 class="big-title">Scanyz</h1>
+        <h2 class="subtitle">Intelligent Document Management Software</h2>
+        
+        <div class="features-list">
+            <span class="feature-item">• Document Filing Automation</span>
+            <span class="feature-item">• Enhanced Computer Vision</span>
+            <span class="feature-item">• Intelligent Document Naming</span>
+            <span class="feature-item">• Zero Sorting Required</span>
+            <span class="feature-item">• Logging and Traceability</span>
+            <span class="feature-item">• Full Encryption</span>
+        </div>
+        
+        <div class="full-width-text">Turn chaos into order</div>
+        
+        <div class="section-content">
+            <div class="section-number">01</div>
+            <p class="section-text">...software uses Computer Vision and Intelligent File Processing to revolutionise paperwork handling. Generates encrypted QR codes for your documents. Print these documents out and use them. Batch scan them. Scanyz will automatically collect, name, merge and file these documents...</p>
+            
+            <div class="staggered-text">
+                <div class="staggered-line">Automatically sorts</div>
+                <div class="staggered-line">groups and files</div>
+                <div class="staggered-line">even when pages are</div>
+                <div class="staggered-line">mixed up & scattered</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="separator"></div>
+    
+    <div class="container">
+        <h2 class="section-title">philosophy</h2>
+        
+        <div class="philosophy-content">
+            <div class="philosophy-card">
+                <h3>Wabi-Sabi</h3>
+                <div class="japanese-vertical">侘寂</div>
+                <p>Scanyz embraces the Japanese concept of Wabi-Sabi – finding beauty in imperfection. Paper documents are inherently imperfect, yet contain valuable information.</p>
+                <p>We don't force rigid structures; instead, we adapt to your existing workflow, bringing order to the natural chaos of paperwork.</p>
+            </div>
+            
+            <div class="philosophy-card">
+                <h3>Antifragile</h3>
+                <div class="delta-symbol">∇</div>
+                <p>Beyond mere robustness, Scanyz is antifragile – it grows stronger from disorder. The more disorganised a pile of documents, the more value to be gained.</p>
+                <p>Unlike fragile systems that break under stress, Scanyz thrives on the complexity of chaotic paperflow.</p>
+            </div>
+        </div>
+        
+        <div class="full-width-text grey">No more sorting</div>
+    </div>
+    
+    <div class="separator"></div>
+    
+    <div class="container">
+        <h2 class="section-title">how it works</h2>
+        
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3 class="step-title">Generate Encrypted QR Codes</h3>
+                    <p class="step-description">Input your documents into Scanyz. The system generates encrypted QR codes on each document, connecting the physical paper to the digital plane. Print out those documents.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3 class="step-title">Business As Usual</h3>
+                    <p class="step-description">Use the documents normally. Add notes, collect signatures, and document information—whatever your team needs to accomplish.</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3 class="step-title">Batch Scan Everything</h3>
+                    <p class="step-description">Hourly, daily, weekly—stack all your documents together. Doesn't matter if they're mixed up, multiple pages, or upside down. Batch scan them and let Scanyz do the rest - sorting them into your specific filing system.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="separator"></div>
+    
+    <div class="container">
+        <div class="cta-section">
+            <h2 class="section-title">get started</h2>
+            <a href="mailto:scanyz@outlook.com.au?subject=Demo Request" class="demo-btn">Get a Demo Today</a>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>© 2025 Scanyz. All rights reserved.</p>
+                    <p>Turning document chaos into organisational strength</p>
+                </div>
+                <div class="footer-links">
+                    <a href="mailto:scanyz@outlook.com.au">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
